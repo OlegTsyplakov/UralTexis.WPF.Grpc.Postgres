@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option csharp_namespace = "UralTexis.Grpc";
+package WorkerIntegration;
+
+service WorkerIntegration {
+	rpc GetAllWorkerStream (EmptyMessage) returns (stream WorkerAction);
+	rpc AddWorker(WorkerAction) returns(EmptyMessage);
+	rpc UpdateWorker(WorkerAction) returns(EmptyMessage);
+	rpc DeleteWorker(WorkerAction) returns(EmptyMessage);
+	rpc ChangeWorker(WorkerAction) returns(EmptyMessage);
+}
+
+message EmptyMessage
+{
+}
+
+message WorkerAction
+{
+	WorkerMessage worker = 1;
+	Action actionType = 2;
+}
+
+message WorkerMessage
+{
+	string LastName = 1;
+	string FirstName = 2;
+	string MiddleName = 3;
+	int64 Birthday = 4;
+	Sex Sex = 5;
+	bool HaveChildren = 6;
+}
+
+//Пол
+enum Sex {
+	DefaultSex = 0;
+	Male = 1;
+	Female = 2;
+}
+
+enum Action {
+	DefaultAction = 0;
+	Create = 1;
+	Update = 2;
+	Delete = 3;
+}
